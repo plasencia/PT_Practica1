@@ -134,9 +134,23 @@ int main(int *argc, char *argv[])
 					if(estado!=S_HELO)
 					// Ejercicio: Comprobar el estado de envio
 						enviados=send(sockfd,buffer_out,(int)strlen(buffer_out),0);
+					
+					// Primitiva
+					if(enviados==INVALID_SOCKET) {
+                       		return(-2);
+		                  }
+
 
 					//Recibo
 					recibidos=recv(sockfd,buffer_in,512,0);
+					
+					// *************
+					// FALTA ENUMERACION DE LA PRIMITIVA
+					// *************
+					
+					if(recibidos==INVALID_SOCKET) {
+		                      return(-3);
+		                                   }
 
 					if(recibidos<=0)
 					{
@@ -169,6 +183,7 @@ int main(int *argc, char *argv[])
 			else
 			{
 				printf("CLIENTE> ERROR AL CONECTAR CON %s:%d\r\n",ipdest,TCP_SERVICE_PORT);
+				
 			}		
 			// fin de la conexion de transporte
 			closesocket(sockfd);
