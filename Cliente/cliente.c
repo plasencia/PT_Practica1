@@ -135,11 +135,24 @@ int main(int *argc, char *argv[])
 					// Ejercicio: Comprobar el estado de envio
 						enviados=send(sockfd,buffer_out,(int)strlen(buffer_out),0);
 					
-					// Primitiva
-					if(enviados==INVALID_SOCKET) {
-                       		return(-2);
-		                  }
 
+					// Debemos añadir lo que viene siguietemente.
+						if(enviados<=0)
+					{
+						DWORD error=GetLastError();
+						if(enviados<0)
+						{
+							printf("CLIENTE> Error %d en el envio de datos\r\n",error);
+							estado=S_QUIT;
+						}
+						else
+						{
+							printf("CLIENTE> Conexión finalizada\r\n");
+							estado=S_QUIT;
+						
+					
+						}
+					}
 
 					//Recibo
 					recibidos=recv(sockfd,buffer_in,512,0);
@@ -148,10 +161,7 @@ int main(int *argc, char *argv[])
 					// FALTA ENUMERACION DE LA PRIMITIVA
 					// *************
 					
-					if(recibidos==INVALID_SOCKET) {
-		                      return(-3);
-		                                   }
-
+					
 					if(recibidos<=0)
 					{
 						DWORD error=GetLastError();
